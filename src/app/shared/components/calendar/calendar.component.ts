@@ -21,32 +21,25 @@ export class CalendarComponent implements OnInit {
   }
 
   getDaysInCurrentMonth() {
-    // const nextMonth = this.currentMonth.setMonth(this.currentMonth.getMonth() + 1);
     const year = this.currentMonth.getFullYear();
-    const month = this.currentMonth.getMonth() + 1;
-    const currentDate = new Date(year, month, 0);
-
-    // return [
-    //   ...Array(nextM.getDate()).map(i => ({
-    //     day: i,
-    //   })),
-    // ];
+    const month = this.currentMonth.getMonth();
+    const currentDate = new Date(year, month + 1, 0);
+    // new Date(year, month + 1, 0), month + 1, sets next month but 0 goes to its prev date, last date of the month
 
     const firstDayOfTheMonth = new Date(currentDate);
     firstDayOfTheMonth.setDate(1);
-    console.log('first', firstDayOfTheMonth, getDayIndexMondaySunday(firstDayOfTheMonth));
+
     const emptyDays = Array.from({ length: getDayIndexMondaySunday(firstDayOfTheMonth) }, () => ({
       day: null,
       name: '',
     }));
 
     const monthDays = Array.from({ length: currentDate.getDate() }, (_, i) => {
-      const day = new Date(year, month, i);
+      const day = new Date(year, month, i + 1);
       return { day: i + 1, name: getDayName(day) };
     });
 
     const daysRemainToFillRow = (emptyDays.length + monthDays.length) % 7;
-
     const lastEmptyDays =
       daysRemainToFillRow === 0
         ? []
@@ -79,5 +72,3 @@ function getDayName(day: Date, locale = 'en-US'): string {
 // }
 
 // var weekDays = getWeekDays('nl-NL'); // Gives back { 'maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag', 'zondag'} which are the days of the week in Dutch.
-
-// TODO: disabled days
