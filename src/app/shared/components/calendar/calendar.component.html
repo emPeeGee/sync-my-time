@@ -1,0 +1,14 @@
+<p>calendar works!</p>
+{{ today }}
+<section>
+  <h2>Calendar</h2>
+
+  <!-- <div>{{ getDaysInCurrentMonth() }}</div> -->
+  <div>{{ currentMonth.toLocaleString('en-US', { month: 'long' }) }}</div>
+
+  <div class="grid grid-cols-7 gap-x-0 gap-y-0">
+    @for (day of getDaysInCurrentMonth(); track $index) {
+      <div class="p-6 border-2">{{ day.name }} {{ day.day }}</div>
+    }
+  </div>
+</section>
