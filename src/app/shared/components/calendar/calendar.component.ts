@@ -10,10 +10,14 @@ import { Component, OnInit } from '@angular/core';
 export class CalendarComponent implements OnInit {
   today = new Date();
   currentMonth = this.today;
+  daysOfTheWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
   constructor() {
     console.log('cons');
-    // this.today.getD;
+  }
+
+  ngOnInit() {
+    console.log('init');
   }
 
   getDaysInCurrentMonth() {
@@ -50,15 +54,6 @@ export class CalendarComponent implements OnInit {
     console.log(lastEmptyDays);
 
     return [...emptyDays, ...monthDays, ...lastEmptyDays];
-
-    // return {
-    //   name: nextM.toLocaleDateString('en-US', { weekday: 'long' }),
-    //   day: nextM.getDate(),
-    // };
-  }
-
-  ngOnInit() {
-    console.log('init');
   }
 }
 
@@ -84,3 +79,5 @@ function getDayName(day: Date, locale = 'en-US'): string {
 // }
 
 // var weekDays = getWeekDays('nl-NL'); // Gives back { 'maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag', 'zondag'} which are the days of the week in Dutch.
+
+// TODO: disabled days
