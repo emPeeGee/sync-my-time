@@ -15,10 +15,14 @@
       }
     </div>
 
-    <div class="grid grid-cols-7 gap-x-0 gap-y-0">
-      @for (day of getDaysInCurrentMonth(); track $index) {
-        <div class="p-6">{{ day.name }} {{ day.day }}</div>
-      }
+    <div class="flex bg-gray-200 text-xs leading-6 text-gray-700 lg:flex-auto">
+      <div class="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px">
+        @for (day of getDaysInCurrentMonth(); track $index) {
+          <div class="relative bg-white px-3 py-2">
+            <time datetime="2022-01-01">{{ day.name }} {{ day.day }}</time>
+          </div>
+        }
+      </div>
     </div>
   </div>
 </section>

@@ -32,18 +32,24 @@ export class CalendarComponent implements OnInit {
     const emptyDays = Array.from({ length: getDayIndexMondaySunday(firstDayOfTheMonth) }, () => ({
       day: null,
       name: '',
+      isCurrentMonth: false,
     }));
 
     const monthDays = Array.from({ length: currentDate.getDate() }, (_, i) => {
       const day = new Date(year, month, i + 1);
-      return { day: i + 1, name: getDayName(day) };
+      return { day: i + 1, name: getDayName(day), isCurrentMonth: true };
     });
 
     const daysRemainToFillRow = (emptyDays.length + monthDays.length) % 7;
     const lastEmptyDays =
       daysRemainToFillRow === 0
         ? []
-        : Array.from({ length: 7 - daysRemainToFillRow }, () => ({ name: null, day: null }));
+        : Array.from({ length: 7 - daysRemainToFillRow }, () => ({
+            name: null,
+            day: null,
+            isCurrentMonth: false,
+          }));
+
     console.log(lastEmptyDays);
 
     return [...emptyDays, ...monthDays, ...lastEmptyDays];
