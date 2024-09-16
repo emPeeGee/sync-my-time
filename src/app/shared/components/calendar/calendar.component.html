@@ -18,9 +18,15 @@
     <div class="flex bg-gray-200 text-xs leading-6 text-gray-700 lg:flex-auto">
       <div class="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px">
         @for (day of getDaysInCurrentMonth(); track $index) {
-          <div class="relative bg-white px-3 py-2">
-            <time datetime="2022-01-01">{{ day.name }} {{ day.day }}</time>
-          </div>
+          @if (day.isCurrentMonth) {
+            <div class="relative bg-white px-3 py-2">
+              <time datetime="2022-01-01">{{ day.name }} {{ day.day }}</time>
+            </div>
+          } @else {
+            <div class="relative bg-gray-50 px-3 py-2 text-gray-500">
+              <time datetime="2021-12-28"> {{ day.name }} {{ day.day }} </time>
+            </div>
+          }
         }
       </div>
     </div>
