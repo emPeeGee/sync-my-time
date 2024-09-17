@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'smt-calendar',
   standalone: true,
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.css',
 })
