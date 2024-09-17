@@ -3,11 +3,18 @@ import { RouterOutlet } from '@angular/router';
 import { ButtonComponent } from './shared/components/button/button.component';
 import { CalendarComponent } from './shared/components/calendar/calendar.component';
 import { SwitchComponent } from './shared/components/switch/switch.component';
+import { PreferencesComponent } from './features/user/components/preferences/preferences.component';
 
 @Component({
   selector: 'smt-root',
   standalone: true,
-  imports: [RouterOutlet, ButtonComponent, CalendarComponent, SwitchComponent],
+  imports: [
+    RouterOutlet,
+    ButtonComponent,
+    CalendarComponent,
+    SwitchComponent,
+    PreferencesComponent,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
