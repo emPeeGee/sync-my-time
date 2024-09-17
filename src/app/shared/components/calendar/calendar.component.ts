@@ -78,20 +78,3 @@ const getDayIndexMondaySunday = (date: Date) => (date.getDay() === 0 ? 6 : date.
 function getDayName(day: Date, locale = 'en-US'): string {
   return day.toLocaleDateString(locale, { weekday: 'long' });
 }
-
-// var dateStr = '05/23/2014';
-// var day = getDayName(dateStr, 'nl-NL'); // Gives back 'Vrijdag' which is Dutch for Friday.
-
-// function getWeekDays(locale)
-// {
-//     var baseDate = new Date(Date.UTC(2017, 0, 2)); // just a Monday
-//     var weekDays = [];
-//     for(i = 0; i < 7; i++)
-//     {
-//         weekDays.push(baseDate.toLocaleDateString(locale, { weekday: 'long' }));
-//         baseDate.setDate(baseDate.getDate() + 1);
-//     }
-//     return weekDays;
-// }
-
-// var weekDays = getWeekDays('nl-NL'); // Gives back { 'maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag', 'zondag'} which are the days of the week in Dutch.
