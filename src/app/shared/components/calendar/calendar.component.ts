@@ -1,10 +1,10 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'smt-calendar',
   standalone: true,
-  imports: [DatePipe],
+  imports: [DatePipe, NgClass],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.css',
 })
