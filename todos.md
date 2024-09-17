@@ -1,3 +1,4 @@
 1. Calendar Mon and Sun week start in settings
-2. Disabled days
-3.
+2. [x] Disabled days => Show days of the other months
+3. Shorter import paths
+4. Suffix to models???
