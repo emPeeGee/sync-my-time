@@ -1,0 +1,16 @@
+<div class="flex items-center">
+  <p class="mr-4 text-sm font-medium text-gray-900 dark:text-gray-300">
+    {{ label }}
+  </p>
+  <label class="relative cursor-pointer">
+    <input
+      type="checkbox"
+      class="sr-only peer"
+      [checked]="checked"
+      [disabled]="disabled"
+      (click)="onSwitchChange()" />
+    <div
+      class="w-[53px] h-7 flex items-center bg-gray-300 rounded-full text-[9px] peer-checked:text-[#007bff] text-gray-300 font-extrabold after:flex after:items-center after:justify-center peer after:content-['Off'] peer-checked:after:content-['On'] peer-checked:after:translate-x-full after:absolute after:left-[2px] peer-checked:after:border-white after:bg-white after:border after:border-gray-300 after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-[#007bff]"
+      [ngClass]="{ 'cursor-not-allowed bg-gray-100': disabled }"></div>
+  </label>
+</div>
