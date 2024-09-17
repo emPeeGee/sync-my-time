@@ -8,5 +8,6 @@
   "trailingComma": "es5",
   "printWidth": 100,
   "endOfLine": "auto",
-  "bracketSameLine": true
+  "bracketSameLine": true,
+  "htmlWhitespaceSensitivity": "ignore"
 }
