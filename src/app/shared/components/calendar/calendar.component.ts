@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -24,31 +25,47 @@ export class CalendarComponent implements OnInit {
     const year = this.currentMonth.getFullYear();
     const month = this.currentMonth.getMonth();
     const currentDate = new Date(year, month + 1, 0);
-    // new Date(year, month + 1, 0), month + 1, sets next month but 0 goes to its prev date, last date of the month
+    const daysInMonth = currentDate.getDate();
 
     const firstDayOfTheMonth = new Date(currentDate);
     firstDayOfTheMonth.setDate(1);
 
-    const emptyDays = Array.from({ length: getDayIndexMondaySunday(firstDayOfTheMonth) }, () => ({
-      day: null,
-      name: '',
-      isCurrentMonth: false,
-    }));
+    const daysLeftInWeekTillNewMonthBegin = getDayIndexMondaySunday(firstDayOfTheMonth);
+    const emptyDays = Array.from({ length: daysLeftInWeekTillNewMonthBegin }, (_, i) => {
+      const day = new Date(year, month, -(daysLeftInWeekTillNewMonthBegin - (i + 1)));
+      return {
+        day: day.getDate(),
+        date: day,
+        name: '',
+        isCurrentMonth: false,
+        isToday: false,
+      };
+    });
 
-    const monthDays = Array.from({ length: currentDate.getDate() }, (_, i) => {
+    const monthDays = Array.from({ length: daysInMonth }, (_, i) => {
       const day = new Date(year, month, i + 1);
-      return { day: i + 1, name: getDayName(day), isCurrentMonth: true };
+      return {
+        day: day.getDate(),
+        date: day,
+        name: getDayName(day),
+        isCurrentMonth: true,
+        isToday: day.getDate() === this.today.getDate(),
+      };
     });
 
     const daysRemainToFillRow = (emptyDays.length + monthDays.length) % 7;
     const lastEmptyDays =
       daysRemainToFillRow === 0
         ? []
-        : Array.from({ length: 7 - daysRemainToFillRow }, () => ({
-            name: null,
-            day: null,
-            isCurrentMonth: false,
-          }));
+        : Array.from({ length: 7 - daysRemainToFillRow }, (_, i) => {
+            return {
+              day: new Date(year, month + 1, i + 1).getDate(),
+              date: new Date(year, month + 1, i + 1),
+              name: null,
+              isCurrentMonth: false,
+              isToday: false,
+            };
+          });
 
     console.log(lastEmptyDays);
 
