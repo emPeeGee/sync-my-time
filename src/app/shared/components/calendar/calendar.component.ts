@@ -1,5 +1,9 @@
 import { DatePipe, NgClass } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+
+interface CalendarOptions {
+  startOnMonday: boolean;
+}
 
 @Component({
   selector: 'smt-calendar',
@@ -9,9 +13,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './calendar.component.css',
 })
 export class CalendarComponent implements OnInit {
+  @Input() options: CalendarOptions = { startOnMonday: true };
+
   today = new Date();
   currentMonth = this.today;
-  daysOfTheWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  daysOfTheWeek = getWeekDays(this.options.startOnMonday, 'en-US');
 
   constructor() {
     console.log('cons');
@@ -30,7 +36,10 @@ export class CalendarComponent implements OnInit {
     const firstDayOfTheMonth = new Date(currentDate);
     firstDayOfTheMonth.setDate(1);
 
-    const daysLeftInWeekTillNewMonthBegin = getDayIndexMondaySunday(firstDayOfTheMonth);
+    const daysLeftInWeekTillNewMonthBegin = getDayIndexMondaySunday(
+      firstDayOfTheMonth,
+      this.options.startOnMonday
+    );
     const emptyDays = Array.from({ length: daysLeftInWeekTillNewMonthBegin }, (_, i) => {
       const day = new Date(year, month, -(daysLeftInWeekTillNewMonthBegin - (i + 1)));
       return {
@@ -73,8 +82,29 @@ export class CalendarComponent implements OnInit {
   }
 }
 
-const getDayIndexMondaySunday = (date: Date) => (date.getDay() === 0 ? 6 : date.getDay() - 1);
+const getDayIndexMondaySunday = (date: Date, startOnMonday: boolean) =>
+  startOnMonday ? (date.getDay() === 0 ? 6 : date.getDay() - 1) : date.getDay();
+// const getDayIndexMondaySunday = (date: Date, startOnMonday: boolean) => date.getDay();
 
 function getDayName(day: Date, locale = 'en-US'): string {
   return day.toLocaleDateString(locale, { weekday: 'long' });
+}
+
+export function getWeekDays(startOnMonday = true, locale = 'en-US'): string[] {
+  const weekDays: string[] = [];
+  const baseDate = new Date();
+
+  for (let i = 0; i < 7; i++) {
+    const dayOffset = (startOnMonday ? 1 : 0) + i;
+    // If today is Wednesday, 14th, baseDate.getDay() will return 3 (Wednesday), so baseDate.getDate() - baseDate.getDay() will result in 14 - 3 = 11.
+    // That gives the Sunday of the current week (the 11th).  + dayOffset
+    const currentDay = new Date(
+      baseDate.setDate(baseDate.getDate() - baseDate.getDay() + dayOffset)
+    );
+
+    const dayName = currentDay.toLocaleDateString(locale, { weekday: 'long' });
+    weekDays.push(dayName);
+  }
+
+  return weekDays;
 }
