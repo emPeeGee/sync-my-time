@@ -13,11 +13,16 @@ interface CalendarOptions {
   styleUrl: './calendar.component.css',
 })
 export class CalendarComponent implements OnInit {
-  @Input() options: CalendarOptions = { startOnMonday: true };
+  // NOTE: detect when options changes
+  private _options: CalendarOptions = { startOnMonday: true };
+  @Input() set options(value: CalendarOptions) {
+    this._options = { ...value };
+    this.daysOfTheWeek = getWeekDays(this._options.startOnMonday, 'en-US');
+  }
 
   today = new Date();
   currentMonth = this.today;
-  daysOfTheWeek = getWeekDays(this.options.startOnMonday, 'en-US');
+  daysOfTheWeek = getWeekDays(this._options.startOnMonday, 'en-US');
 
   constructor() {
     console.log('cons');
@@ -38,7 +43,7 @@ export class CalendarComponent implements OnInit {
 
     const daysLeftInWeekTillNewMonthBegin = getDayIndexMondaySunday(
       firstDayOfTheMonth,
-      this.options.startOnMonday
+      this._options.startOnMonday
     );
     const emptyDays = Array.from({ length: daysLeftInWeekTillNewMonthBegin }, (_, i) => {
       const day = new Date(year, month, -(daysLeftInWeekTillNewMonthBegin - (i + 1)));
@@ -75,8 +80,6 @@ export class CalendarComponent implements OnInit {
               isToday: false,
             };
           });
-
-    console.log(lastEmptyDays);
 
     return [...emptyDays, ...monthDays, ...lastEmptyDays];
   }
