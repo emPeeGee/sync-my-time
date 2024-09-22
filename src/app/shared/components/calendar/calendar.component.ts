@@ -14,9 +14,10 @@ interface CalendarOptions {
 })
 export class CalendarComponent implements OnInit {
   // NOTE: detect when options changes
+  // TODO: try input() as signal
   private _options: CalendarOptions = { startOnMonday: true };
   @Input() set options(value: CalendarOptions) {
-    this._options = { ...value };
+    this._options = value;
     this.daysOfTheWeek = getWeekDays(this._options.startOnMonday, 'en-US');
   }
 
