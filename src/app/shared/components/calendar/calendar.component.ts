@@ -84,6 +84,14 @@ export class CalendarComponent implements OnInit {
 
     return [...emptyDays, ...monthDays, ...lastEmptyDays];
   }
+
+  onMonthChangeClick(type: 'next' | 'prev') {
+    this.currentMonth = new Date(
+      this.currentMonth.getFullYear(),
+      this.currentMonth.getMonth() + (type === 'next' ? 1 : -1),
+      this.currentMonth.getDate()
+    );
+  }
 }
 
 const getDayIndexMondaySunday = (date: Date, startOnMonday: boolean) =>
