@@ -1,5 +1,6 @@
 import { DatePipe, NgClass } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, signal } from '@angular/core';
+import { MenuComponent } from '../menu/menu.component';
 
 interface CalendarOptions {
   startOnMonday: boolean;
@@ -10,7 +11,7 @@ const TOTAL_CELLS = 42;
 @Component({
   selector: 'smt-calendar',
   standalone: true,
-  imports: [DatePipe, NgClass],
+  imports: [DatePipe, NgClass, MenuComponent],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.css',
 })
@@ -26,6 +27,15 @@ export class CalendarComponent implements OnInit {
   today = new Date();
   currentMonth = this.today;
   daysOfTheWeek = getWeekDays(this._options.startOnMonday, 'en-US');
+
+  readonly VIEW_OPTIONS = [
+    { id: 'day', label: 'Day view' },
+    { id: 'work-day', label: 'Work day view' },
+    { id: 'week', label: 'Week view' },
+    { id: 'month', label: 'Month view' },
+    { id: 'year', label: 'Year view' },
+  ];
+  viewMode = signal(this.VIEW_OPTIONS[4]);
 
   constructor() {
     console.log('cons');
