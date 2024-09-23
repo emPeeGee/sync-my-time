@@ -5,7 +5,7 @@ interface CalendarOptions {
   startOnMonday: boolean;
 }
 
-const TOTAL_CELLS = 49;
+const TOTAL_CELLS = 42;
 
 @Component({
   selector: 'smt-calendar',
