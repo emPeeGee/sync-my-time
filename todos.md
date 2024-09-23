@@ -4,6 +4,6 @@
 4. Suffix to models???
 5. Different color for each month or season
 
-6. fix the current day in different month
+6. [x] fix the current day in different month
 7. fix the calendar bumps in rows when switching months
-8. fix the today click
+8. [x] fix the today click

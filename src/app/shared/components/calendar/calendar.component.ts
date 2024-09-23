@@ -85,7 +85,15 @@ export class CalendarComponent implements OnInit {
     return [...emptyDays, ...monthDays, ...lastEmptyDays];
   }
 
-  onMonthChangeClick(type: 'next' | 'prev') {
+  onMonthChangeClick(type: 'next' | 'prev' | 'today') {
+    if (type === 'today') {
+      this.currentMonth = new Date(
+        this.today.getFullYear(),
+        this.today.getMonth(),
+        this.today.getDate()
+      );
+      return;
+    }
     this.currentMonth = new Date(
       this.currentMonth.getFullYear(),
       this.currentMonth.getMonth() + (type === 'next' ? 1 : -1),
