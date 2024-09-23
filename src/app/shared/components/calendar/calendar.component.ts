@@ -64,7 +64,7 @@ export class CalendarComponent implements OnInit {
         date: day,
         name: getDayName(day),
         isCurrentMonth: true,
-        isToday: day.getDate() === this.today.getDate(),
+        isToday: isSameDay(day, this.today),
       };
     });
 
@@ -119,4 +119,11 @@ export function getWeekDays(startOnMonday = true, locale = 'en-US'): string[] {
   }
 
   return weekDays;
+}
+export function isSameDay(date1: Date, date2: Date) {
+  return (
+    date1.getDate() === date2.getDate() &&
+    date1.getMonth() === date2.getMonth() &&
+    date1.getFullYear() === date2.getFullYear()
+  );
 }
