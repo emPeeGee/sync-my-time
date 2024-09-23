@@ -1,7 +1,7 @@
 <section class="m-6">
   <header class="flex items-center justify-between border-b border-gray-200 py-4 lg:flex-none">
     <h3 class="text-gray-900">
-      <time datetime="2022-01" class="block">
+      <time [dateTime]="currentMonth | date: 'y MMMM'" class="block">
         <span class="text-4xl font-bold text-rose-700">
           {{ currentMonth | date: 'MMMM' }} {{ ' ' }}
         </span>
@@ -78,7 +78,7 @@
                       Maple syrup museum
                     </p>
                     <time
-                      datetime="2022-01-22T15:00"
+                      [dateTime]="day.date | date"
                       class="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block">
                       3PM
                     </time>
@@ -90,8 +90,9 @@
                       class="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600">
                       Hockey game
                     </p>
+                    <!-- TODO: use event date time -->
                     <time
-                      datetime="2022-01-22T19:00"
+                      [dateTime]="day.date | date"
                       class="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block">
                       7PM
                     </time>
@@ -101,7 +102,7 @@
             </div>
           } @else {
             <div class="relative bg-gray-50 px-3 py-2 text-gray-500">
-              <time datetime="2021-12-28">{{ day.name }} {{ day.day }}</time>
+              <time [dateTime]="day.date | date">{{ day.day }}</time>
             </div>
           }
         }
