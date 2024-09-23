@@ -16,7 +16,7 @@ const TOTAL_CELLS = 42;
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.css',
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent {
   // NOTE: detect when options changes
   // TODO: try input() as signal
   private _options: CalendarOptions = { startOnMonday: true };
@@ -36,14 +36,46 @@ export class CalendarComponent implements OnInit {
     { id: 'month', label: 'Month view' },
     { id: 'year', label: 'Year view' },
   ];
-  viewMode = signal(this.VIEW_OPTIONS[4]);
+  viewMode = signal(this.VIEW_OPTIONS[0]);
 
-  constructor() {
-    console.log('cons');
+  selectedDate: Date = new Date(); // Set the date you want to display
+  hours: string[] = Array.from({ length: 24 }, (_, i) => `${i}:00`); // Hours 00:00 to 23:00
+  selectedRange: any = null;
+  // selectedRange: { startHour: string; endHour?: string } = null;
+  isDragging = false;
+
+  onMouseDown(hour: string) {
+    this.isDragging = true;
+    this.selectedRange = { startHour: hour };
   }
 
-  ngOnInit() {
-    console.log('init');
+  onMouseMove(hour: string) {
+    if (this.isDragging) {
+      this.selectedRange = { ...this.selectedRange, endHour: hour };
+    }
+  }
+
+  onMouseUp(hour: string) {
+    this.isDragging = false;
+    this.selectedRange = { ...this.selectedRange, endHour: hour };
+    console.log('Selected Range:', this.selectedRange);
+  }
+
+  isSelected(hour: string): boolean {
+    if (!this.selectedRange) return false;
+
+    const { startHour, endHour } = this.selectedRange;
+    if (!endHour) return hour === startHour;
+
+    return this.isWithinRange(hour);
+  }
+
+  isWithinRange(hour: string): boolean {
+    const startIndex = this.hours.indexOf(this.selectedRange.startHour);
+    const endIndex = this.hours.indexOf(this.selectedRange.endHour);
+    const currentIndex = this.hours.indexOf(hour);
+
+    return currentIndex >= startIndex && currentIndex <= endIndex;
   }
 
   getDaysInCurrentMonth() {

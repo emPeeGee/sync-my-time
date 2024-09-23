@@ -2,6 +2,11 @@
   <header class="flex items-center justify-between border-b border-gray-200 py-4 lg:flex-none">
     <h3 class="text-gray-900">
       <time [dateTime]="currentMonth | date: 'y MMMM'" class="block">
+        @if (viewMode().id === 'day') {
+          <span class="text-4xl font-bold text-rose-700">
+            {{ currentMonth | date: 'dd' }} {{ ' ' }}
+          </span>
+        }
         <span class="text-4xl font-bold text-rose-700">
           {{ currentMonth | date: 'MMMM' }} {{ ' ' }}
         </span>
@@ -52,67 +57,87 @@
   </header>
 
   <div class="shadow ring-1 ring-black ring-opacity-5 lg:flex lg:flex-auto lg:flex-col">
-    <div
-      class="grid grid-cols-7 gap-px border-b border-gray-300 bg-gray-200 text-center text-xs font-semibold leading-6 text-gray-700 lg:flex-none">
-      @for (day of daysOfTheWeek; track $index) {
-        <div class="flex justify-center bg-white py-2">
-          <span>{{ day.charAt(0) }}</span>
-          <span class="sr-only sm:not-sr-only">{{ day.slice(1, 3) }}</span>
-        </div>
-      }
-    </div>
-
-    <div class="flex bg-gray-200 text-xs leading-6 text-gray-700 lg:flex-auto">
-      <div class="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px">
-        @for (day of getDaysInCurrentMonth(); track $index) {
-          @if (day.isCurrentMonth) {
-            <div class="relative bg-white px-3 py-2">
-              <time
-                [dateTime]="day.date | date"
-                [ngClass]="{
-                  'flex h-6 w-6 items-center justify-center rounded-full bg-rose-600 font-semibold text-white':
-                    day.isToday,
-                }">
-                {{ day.day }}
-              </time>
-
-              <ol class="mt-2">
-                <li>
-                  <a href="#" class="group flex">
-                    <p
-                      class="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600">
-                      Maple syrup museum
-                    </p>
-                    <time
-                      [dateTime]="day.date | date"
-                      class="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block">
-                      3PM
-                    </time>
-                  </a>
-                </li>
-                <li>
-                  <a href="#" class="group flex">
-                    <p
-                      class="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600">
-                      Hockey game
-                    </p>
-                    <!-- TODO: use event date time -->
-                    <time
-                      [dateTime]="day.date | date"
-                      class="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block">
-                      7PM
-                    </time>
-                  </a>
-                </li>
-              </ol>
+    @if (viewMode().id === 'day') {
+      <div class="flex flex-col text-xs leading-6 text-gray-700 lg:flex-auto p-4">
+        @for (hour of hours; track $index) {
+          <div
+            class="relative flex flex-row"
+            (mousedown)="onMouseDown(hour)"
+            (mouseup)="onMouseUp(hour)"
+            (mousemove)="onMouseMove(hour)">
+            <div class="flex items-center h-8 w-12">
+              <div class="select-none text-gray-700 leading-4">
+                {{ hour }}
+              </div>
             </div>
-          } @else {
-            <div class="relative bg-gray-50 px-3 py-2 text-gray-500">
-              <time [dateTime]="day.date | date">{{ day.day }}</time>
+            <div class="w-full" [ngClass]="{ 'bg-rose-200': isSelected(hour) }">
+              <div class="w-full h-px bg-gray-300"></div>
             </div>
-          }
+          </div>
         }
       </div>
-    </div>
+    } @else if (viewMode().id === 'month') {
+      <div
+        class="grid grid-cols-7 gap-px border-b border-gray-300 bg-gray-200 text-center text-xs font-semibold leading-6 text-gray-700 lg:flex-none">
+        @for (day of daysOfTheWeek; track $index) {
+          <div class="flex justify-center bg-white py-2">
+            <span>{{ day.charAt(0) }}</span>
+            <span class="sr-only sm:not-sr-only">{{ day.slice(1, 3) }}</span>
+          </div>
+        }
+      </div>
+      <div class="flex bg-gray-200 text-xs leading-6 text-gray-700 lg:flex-auto">
+        <div class="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px">
+          @for (day of getDaysInCurrentMonth(); track $index) {
+            @if (day.isCurrentMonth) {
+              <div class="relative bg-white px-3 py-2">
+                <time
+                  [dateTime]="day.date | date"
+                  [ngClass]="{
+                    'flex h-6 w-6 items-center justify-center rounded-full bg-rose-600 font-semibold text-white':
+                      day.isToday,
+                  }">
+                  {{ day.day }}
+                </time>
+
+                <ol class="mt-2">
+                  <li>
+                    <a href="#" class="group flex">
+                      <p
+                        class="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600">
+                        Maple syrup museum
+                      </p>
+                      <time
+                        [dateTime]="day.date | date"
+                        class="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block">
+                        3PM
+                      </time>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" class="group flex">
+                      <p
+                        class="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600">
+                        Hockey game
+                      </p>
+                      <!-- TODO: use event date time -->
+                      <time
+                        [dateTime]="day.date | date"
+                        class="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block">
+                        7PM
+                      </time>
+                    </a>
+                  </li>
+                </ol>
+              </div>
+            } @else {
+              <div class="relative bg-gray-50 px-3 py-2 text-gray-500">
+                <time [dateTime]="day.date | date">{{ day.day }}</time>
+              </div>
+            }
+          }
+        </div>
+      </div>
+    }
   </div>
 </section>
