@@ -58,7 +58,7 @@
     </div>
 
     <div class="flex bg-gray-200 text-xs leading-6 text-gray-700 lg:flex-auto">
-      <div class="hidden w-full lg:grid lg:grid-cols-7 lg:gap-px">
+      <div class="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-7 lg:gap-px">
         @for (day of getDaysInCurrentMonth(); track $index) {
           @if (day.isCurrentMonth) {
             <div class="relative bg-white px-3 py-2">

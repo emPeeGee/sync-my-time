@@ -5,6 +5,8 @@ interface CalendarOptions {
   startOnMonday: boolean;
 }
 
+const TOTAL_CELLS = 49;
+
 @Component({
   selector: 'smt-calendar',
   standalone: true,
@@ -68,11 +70,11 @@ export class CalendarComponent implements OnInit {
       };
     });
 
-    const daysRemainToFillRow = (emptyDays.length + monthDays.length) % 7;
+    const daysRemainToFillRow = TOTAL_CELLS - (emptyDays.length + monthDays.length);
     const lastEmptyDays =
       daysRemainToFillRow === 0
         ? []
-        : Array.from({ length: 7 - daysRemainToFillRow }, (_, i) => {
+        : Array.from({ length: daysRemainToFillRow }, (_, i) => {
             return {
               day: new Date(year, month + 1, i + 1).getDate(),
               date: new Date(year, month + 1, i + 1),
