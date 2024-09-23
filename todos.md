@@ -5,5 +5,5 @@
 5. Different color for each month or season
 
 6. [x] fix the current day in different month
-7. fix the calendar bumps in rows when switching months
+7. [x] fix the calendar bumps in rows when switching months
 8. [x] fix the today click
