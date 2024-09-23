@@ -1,3 +1,36 @@
+https://stackoverflow.com/questions/40905499/where-to-put-interfaces-and-type-aliases
+
+<!-- |-- app
+     |-- modules
+       |-- home
+           |-- [+] components
+           |-- [+] pages
+           |-- home-routing.module.ts
+           |-- home.module.ts
+     |-- core
+       |-- [+] authentication
+       |-- [+] footer
+       |-- [+] guards
+       |-- [+] mocks
+       |-- [+] models
+       |-- [+] validators
+       |-- [+] services
+       |-- core.module.ts
+       |-- ensureModuleLoadedOnceGuard.ts
+       |-- logger.service.ts
+     |
+     |-- shared
+          |-- [+] components
+          |-- [+] directives
+          |-- [+] pipes
+     |
+     |-- [+] configs
+|-- assets
+     |-- scss
+          |-- [+] partials
+          |-- _base.scss
+          |-- styles.scss -->
+
 https://www.gerome.dev/blog/standalone-angular-folder-structure/
 https://github.com/gothinkster/angular-realworld-example-app
 

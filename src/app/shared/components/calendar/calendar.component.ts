@@ -1,6 +1,7 @@
 import { DatePipe, NgClass } from '@angular/common';
 import { Component, Input, OnInit, signal } from '@angular/core';
 import { MenuComponent } from '../menu/menu.component';
+import { MenuItem } from '../../../core/models/menu.model';
 
 interface CalendarOptions {
   startOnMonday: boolean;
@@ -28,7 +29,7 @@ export class CalendarComponent implements OnInit {
   currentMonth = this.today;
   daysOfTheWeek = getWeekDays(this._options.startOnMonday, 'en-US');
 
-  readonly VIEW_OPTIONS = [
+  readonly VIEW_OPTIONS: MenuItem[] = [
     { id: 'day', label: 'Day view' },
     { id: 'work-day', label: 'Work day view' },
     { id: 'week', label: 'Week view' },

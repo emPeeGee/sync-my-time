@@ -6,7 +6,7 @@
     id="menu-button"
     aria-expanded="false"
     aria-haspopup="true">
-    Month view
+    {{ selected()?.label }}
     <svg
       class="-mr-1 h-5 w-5 text-gray-400"
       viewBox="0 0 20 20"
@@ -19,9 +19,7 @@
     </svg>
   </button>
 
-  <!--
-            Dropdown menu, show/hide based on menu state.
-
+  <!-- Dropdown menu, show/hide based on menu state.
             Entering: "transition ease-out duration-100"
               From: "transform opacity-0 scale-95"
               To: "transform opacity-100 scale-100"
@@ -29,11 +27,6 @@
               From: "transform opacity-100 scale-100"
               To: "transform opacity-0 scale-95"
           -->
-
-  <!-- [ngClass]="{
-      block: isOpen(),
-      hidden: !isOpen(),
-    }" -->
   <div
     class="absolute hidden right-0 z-10 mt-3 w-36 origin-top-right overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
     #menu
@@ -42,11 +35,14 @@
     aria-labelledby="menu-button"
     tabindex="-1">
     <div class="py-1" role="none">
-      <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
       @for (item of items(); track $index) {
         <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events -->
         <li
-          class="text-gray-700 block px-4 py-2 text-sm cursor-pointer hover:bg-gray-100"
+          class="text-gray-700 block px-4 py-2 text-sm cursor-pointer hover:bg-rose-100"
+          [ngClass]="{
+            'bg-rose-200 text-gray-900': selected()?.id === item.id,
+            'text-gray-700': selected()?.id !== item.id,
+          }"
           role="menuitem"
           tabindex="-1"
           (click)="onItemClick(item)">

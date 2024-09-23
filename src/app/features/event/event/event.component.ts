@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CalendarComponent } from '../../../shared/components/calendar/calendar.component';
 import { PreferencesService } from '../../../core/services/preferences.service';
-import { Preferences } from '../../../shared/models/user.model';
+import { Preferences } from '../../../core/models/user.model';
 
 @Component({
   selector: 'smt-event',

@@ -8,3 +8,4 @@
 7. [x] fix the calendar bumps in rows when switching months
 8. [x] fix the today click
 9. Consistent hover behavior, especially bg color
+10. fix menu dropdown outside hover to disappear
