@@ -9,3 +9,4 @@
 8. [x] fix the today click
 9. Consistent hover behavior, especially bg color
 10. fix menu dropdown outside hover to disappear
+11. a line indicating current time

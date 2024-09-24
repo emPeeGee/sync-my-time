@@ -28,6 +28,7 @@ export class CalendarComponent {
   }
 
   today = new Date();
+  minutesInPercent = `${Math.floor((100 * this.today.getMinutes()) / 60)}%`;
   currentMonth = this.today;
   daysOfTheWeek = getWeekDays(this._options.startOnMonday, 'en-US');
 
