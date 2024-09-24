@@ -62,9 +62,11 @@
         @for (hour of hours; track $index) {
           <div
             class="relative flex flex-row"
+            smtDebounceMousemove
+            [debounceTime]="150"
+            (debouncedMousemove)="onMouseMove(hour)"
             (mousedown)="onMouseDown(hour)"
-            (mouseup)="onMouseUp(hour)"
-            (mousemove)="onMouseMove(hour)">
+            (mouseup)="onMouseUp(hour)">
             <div class="flex items-center h-8 w-12">
               <div class="select-none text-gray-700 leading-4">
                 {{ hour }}
