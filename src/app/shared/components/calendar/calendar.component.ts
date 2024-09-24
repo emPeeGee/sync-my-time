@@ -75,7 +75,10 @@ export class CalendarComponent {
     const endIndex = this.hours.indexOf(this.selectedRange.endHour);
     const currentIndex = this.hours.indexOf(hour);
 
-    return currentIndex >= startIndex && currentIndex <= endIndex;
+    return (
+      (currentIndex >= startIndex && currentIndex <= endIndex) ||
+      (currentIndex <= startIndex && currentIndex >= endIndex)
+    );
   }
 
   getDaysInCurrentMonth() {
