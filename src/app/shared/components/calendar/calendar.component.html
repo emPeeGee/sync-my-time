@@ -75,7 +75,7 @@
             <div class="w-full relative" [ngClass]="{ 'bg-rose-200': isSelected(hour) }">
               <div class="w-full h-px bg-gray-300"></div>
 
-              @if (hour.includes(today.getHours().toString())) {
+              @if (isCurrentHour(hour)) {
                 <div
                   class="w-full h-0.5 absolute bg-lime-600"
                   [style]="{ top: minutesInPercent }"></div>

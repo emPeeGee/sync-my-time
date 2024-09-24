@@ -28,7 +28,6 @@ export class CalendarComponent {
   }
 
   today = new Date();
-  minutesInPercent = `${Math.floor((100 * this.today.getMinutes()) / 60)}%`;
   currentMonth = this.today;
   daysOfTheWeek = getWeekDays(this._options.startOnMonday, 'en-US');
 
@@ -46,6 +45,14 @@ export class CalendarComponent {
   selectedRange: any = null;
   // selectedRange: { startHour: string; endHour?: string } = null;
   isDragging = false;
+
+  isCurrentHour(hour: string): boolean {
+    return hour.includes(this.today.getHours().toString());
+  }
+
+  get minutesInPercent(): string {
+    return `${Math.floor((100 * this.today.getMinutes()) / 60)}%`;
+  }
 
   onMouseDown(hour: string) {
     this.isDragging = true;
