@@ -15,7 +15,6 @@ export class DebounceMousemoveDirective implements OnInit {
     fromEvent<MouseEvent>(this.el.nativeElement, 'mousemove')
       .pipe(debounceTime(this.debounceTime))
       .subscribe((event: MouseEvent) => {
-        console.log('ev');
         this.debouncedMousemove.emit(event);
       });
   }

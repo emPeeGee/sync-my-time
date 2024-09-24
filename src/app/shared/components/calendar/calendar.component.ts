@@ -1,7 +1,8 @@
 import { DatePipe, NgClass } from '@angular/common';
-import { Component, Input, OnInit, signal } from '@angular/core';
+import { Component, Input, signal } from '@angular/core';
 import { MenuComponent } from '../menu/menu.component';
 import { MenuItem } from '../../../core/models/menu.model';
+import { DebounceMousemoveDirective } from '../../directives/debounce-mousemove.directive';
 
 interface CalendarOptions {
   startOnMonday: boolean;
@@ -12,9 +13,10 @@ const TOTAL_CELLS = 42;
 @Component({
   selector: 'smt-calendar',
   standalone: true,
-  imports: [DatePipe, NgClass, MenuComponent],
+  imports: [DatePipe, NgClass, MenuComponent, DebounceMousemoveDirective],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.css',
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarComponent {
   // NOTE: detect when options changes
@@ -61,6 +63,7 @@ export class CalendarComponent {
     console.log('Selected Range:', this.selectedRange);
   }
 
+  // NOTE: is called too many times
   isSelected(hour: string): boolean {
     if (!this.selectedRange) return false;
 
@@ -176,6 +179,7 @@ export function getWeekDays(startOnMonday = true, locale = 'en-US'): string[] {
 
   return weekDays;
 }
+
 export function isSameDay(date1: Date, date2: Date) {
   return (
     date1.getDate() === date2.getDate() &&
