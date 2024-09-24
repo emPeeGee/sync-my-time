@@ -10,3 +10,6 @@
 9. Consistent hover behavior, especially bg color
 10. fix menu dropdown outside hover to disappear
 11. a line indicating current time
+12. Date extension, with handy methods as a class
+13. Setting: Time format: 1 PM vs 13
+14. Setting: Timezone

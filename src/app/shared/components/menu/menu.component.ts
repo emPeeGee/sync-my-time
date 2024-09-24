@@ -18,9 +18,9 @@ import { MenuItem } from '../../../core/models/menu.model';
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css',
 })
-export class MenuComponent implements AfterViewInit {
-  items = input.required<MenuItem[]>();
-  selected = model<MenuItem>();
+export class MenuComponent<T> implements AfterViewInit {
+  items = input.required<MenuItem<T>[]>();
+  selected = model<MenuItem<T>>();
   isOpen = signal<boolean>(false);
 
   @ViewChild('button') button: ElementRef<HTMLButtonElement> | undefined;
@@ -53,7 +53,7 @@ export class MenuComponent implements AfterViewInit {
     console.log('menu dropdown hidden');
   }
 
-  onItemClick(item: MenuItem) {
+  onItemClick(item: MenuItem<T>) {
     this.selected.set({ ...item });
   }
 }

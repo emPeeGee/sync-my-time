@@ -10,6 +10,8 @@ interface CalendarOptions {
 
 const TOTAL_CELLS = 42;
 
+type ViewMode = 'day' | 'work-day' | 'week' | 'month' | 'year';
+
 @Component({
   selector: 'smt-calendar',
   standalone: true,
@@ -31,7 +33,7 @@ export class CalendarComponent {
   currentMonth = this.today;
   daysOfTheWeek = getWeekDays(this._options.startOnMonday, 'en-US');
 
-  readonly VIEW_OPTIONS: MenuItem[] = [
+  readonly VIEW_OPTIONS: MenuItem<ViewMode>[] = [
     { id: 'day', label: 'Day view' },
     { id: 'work-day', label: 'Work day view' },
     { id: 'week', label: 'Week view' },
@@ -40,7 +42,7 @@ export class CalendarComponent {
   ];
   viewMode = signal(this.VIEW_OPTIONS[0]);
 
-  selectedDate: Date = new Date(); // Set the date you want to display
+  selectedDate: Date = new Date();
   hours: string[] = Array.from({ length: 24 }, (_, i) => `${i}:00`); // Hours 00:00 to 23:00
   selectedRange: any = null;
   // selectedRange: { startHour: string; endHour?: string } = null;
@@ -146,18 +148,31 @@ export class CalendarComponent {
 
   onMonthChangeClick(type: 'next' | 'prev' | 'today') {
     if (type === 'today') {
-      this.currentMonth = new Date(
-        this.today.getFullYear(),
-        this.today.getMonth(),
-        this.today.getDate()
-      );
+      this.currentMonth = new Date(this.today.getTime());
       return;
     }
-    this.currentMonth = new Date(
-      this.currentMonth.getFullYear(),
-      this.currentMonth.getMonth() + (type === 'next' ? 1 : -1),
-      this.currentMonth.getDate()
-    );
+
+    switch (this.viewMode().id) {
+      case 'day':
+        this.currentMonth = new Date(
+          this.currentMonth.getFullYear(),
+          this.currentMonth.getMonth(),
+          this.currentMonth.getDate() + (type === 'next' ? 1 : -1)
+        );
+        break;
+      case 'work-day':
+      case 'week':
+        break;
+
+      case 'month':
+        this.currentMonth = new Date(
+          this.currentMonth.getFullYear(),
+          this.currentMonth.getMonth() + (type === 'next' ? 1 : -1),
+          this.currentMonth.getDate()
+        );
+        break;
+      case 'year':
+    }
   }
 }
 
