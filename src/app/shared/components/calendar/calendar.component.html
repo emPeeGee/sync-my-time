@@ -69,7 +69,7 @@
             (debouncedMousemove)="onMouseMove(hour)"
             (mousedown)="onMouseDown(hour)"
             (mouseup)="onMouseUp(hour)">
-            <div class="flex items-center h-8 w-12">
+            <div class="flex items-center h-8 w-14">
               <div class="select-none text-gray-700 leading-4">
                 {{ hour }}
               </div>
@@ -79,7 +79,7 @@
 
               @if (isCurrentHour(hour)) {
                 <div
-                  class="w-full h-0.5 absolute bg-lime-600"
+                  class="w-full h-0.5 absolute bg-lime-600 before:block before:w-4 before:h-4 before:bg-lime-600 before:content-[''] before:rounded-full before:-translate-y-2 before:-translate-x-3.5"
                   [style]="{ top: minutesInPercent }"></div>
               }
             </div>

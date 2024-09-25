@@ -15,3 +15,4 @@
 14. Setting: Timezone
 15. Dark theme with tailwind
 16. Google calendar, outlook, apple calendar as inspiration
+17. Instead of work week view. Setting option -> Show weekends
