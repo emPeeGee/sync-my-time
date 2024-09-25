@@ -51,11 +51,10 @@ export class CalendarComponent {
   hours: string[] = Array.from({ length: 24 }, (_, i) => `${i < 10 ? 0 : ''}${i}:00`); // Hours 00:00 to 23:00
   selectedRange: any = null;
   // selectedRange: { startHour: string; endHour?: string } = null;
-  isDragging = false;
+  isDragging = signal(false);
 
   isCurrentHour(hour: string): boolean {
     const currentHour = hoursFormatter.format(this.today);
-    console.log(hour);
     return hour.includes(currentHour);
   }
 
@@ -64,20 +63,19 @@ export class CalendarComponent {
   }
 
   onMouseDown(hour: string) {
-    this.isDragging = true;
+    this.isDragging.set(true);
     this.selectedRange = { startHour: hour };
   }
 
-  onMouseMove(hour: string) {
-    if (this.isDragging) {
+  onMouseMove(hour: unknown) {
+    if (this.isDragging()) {
       this.selectedRange = { ...this.selectedRange, endHour: hour };
     }
   }
 
   onMouseUp(hour: string) {
-    this.isDragging = false;
+    this.isDragging.set(false);
     this.selectedRange = { ...this.selectedRange, endHour: hour };
-    console.log('Selected Range:', this.selectedRange);
   }
 
   // NOTE: is called too many times
