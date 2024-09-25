@@ -10,7 +10,7 @@ interface CalendarOptions {
 
 const TOTAL_CELLS = 42;
 
-type ViewMode = 'day' | 'work-day' | 'week' | 'month' | 'year';
+type ViewMode = 'day' | 'week' | 'month' | 'year';
 
 @Component({
   selector: 'smt-calendar',
@@ -35,7 +35,6 @@ export class CalendarComponent {
 
   readonly VIEW_OPTIONS: MenuItem<ViewMode>[] = [
     { id: 'day', label: 'Day view' },
-    { id: 'work-day', label: 'Work day view' },
     { id: 'week', label: 'Week view' },
     { id: 'month', label: 'Month view' },
     { id: 'year', label: 'Year view' },
@@ -160,7 +159,6 @@ export class CalendarComponent {
           this.currentMonth.getDate() + (type === 'next' ? 1 : -1)
         );
         break;
-      case 'work-day':
       case 'week':
         break;
 
