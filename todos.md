@@ -15,3 +15,5 @@
 14. Setting: Timezone
 15. Dark theme with tailwind
 16. Google calendar, outlook, apple calendar as inspiration
+17. e2e tests or integration tests
+18. Primary color with tailwind
