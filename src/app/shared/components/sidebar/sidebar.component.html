@@ -1,0 +1,24 @@
+<div class="">
+  <button (click)="toggleMenu()">
+    <span>toggle menu</span>
+  </button>
+  <div
+    class="fixed top-0 right-auto h-full w-4/12 border-teal-400 border-2 bg-gray-50 z-10"
+    [@slideInOut]="menuState">
+    <div class="p-4">
+      <h1>432</h1>
+
+      <ul>
+        <li>123</li>
+        <li>123</li>
+        <li>123</li>
+        <li>123</li>
+        <li>123</li>
+        <li>123</li>
+      </ul>
+    </div>
+    <button (click)="toggleMenu()" class="hamburger">
+      <span>toggle menu</span>
+    </button>
+  </div>
+</div>

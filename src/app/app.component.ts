@@ -5,6 +5,7 @@ import { CalendarComponent } from './shared/components/calendar/calendar.compone
 import { SwitchComponent } from './shared/components/switch/switch.component';
 import { UserComponent } from './features/user/user.component';
 import { EventComponent } from './features/event/event/event.component';
+import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 
 @Component({
   selector: 'smt-root',
@@ -16,6 +17,7 @@ import { EventComponent } from './features/event/event/event.component';
     SwitchComponent,
     UserComponent,
     EventComponent,
+    SidebarComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
