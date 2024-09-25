@@ -8,6 +8,7 @@ import { Preferences } from '../models/user.model';
 export class PreferencesService {
   private preferences = new BehaviorSubject<Preferences>({
     startOnMonday: true,
+    isSidebarOpen: true,
   });
 
   preferences$ = this.preferences.asObservable();
@@ -25,6 +26,7 @@ export class PreferencesService {
   resetSettings() {
     this.preferences.next({
       startOnMonday: true,
+      isSidebarOpen: true,
     });
   }
 }

@@ -1,5 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { PreferencesService } from '../../../core/services/preferences.service';
 
 @Component({
   selector: 'smt-sidebar',
@@ -12,13 +13,13 @@ import { Component } from '@angular/core';
       state(
         'in',
         style({
-          transform: 'translate3d(0,0,0)',
+          width: '288px',
         })
       ),
       state(
         'out',
         style({
-          transform: 'translate3d(-100%, 0, 0)',
+          width: '64px',
         })
       ),
       transition('in => out', animate('400ms ease-in-out')),
@@ -27,9 +28,12 @@ import { Component } from '@angular/core';
   ],
 })
 export class SidebarComponent {
-  menuState = 'in';
+  menuState = signal('in');
+  // TODO: do I need it here? I mean, to set it in general
+  userPreferencesService = inject(PreferencesService);
 
   toggleMenu() {
-    this.menuState = this.menuState === 'out' ? 'in' : 'out';
+    this.menuState.update(v => (v === 'out' ? 'in' : 'out'));
+    this.userPreferencesService.updatePreferences('isSidebarOpen', this.menuState() === 'in');
   }
 }
