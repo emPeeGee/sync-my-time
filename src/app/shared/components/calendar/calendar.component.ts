@@ -1,5 +1,5 @@
 import { DatePipe, NgClass } from '@angular/common';
-import { Component, Input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, signal } from '@angular/core';
 import { MenuComponent } from '../menu/menu.component';
 import { MenuItem } from '../../../core/models/menu.model';
 import { DebounceMousemoveDirective } from '../../directives/debounce-mousemove.directive';
@@ -12,13 +12,18 @@ const TOTAL_CELLS = 42;
 
 type ViewMode = 'day' | 'work-day' | 'week' | 'month' | 'year';
 
+const hoursFormatter = new Intl.DateTimeFormat('en-US', {
+  hour: 'numeric',
+  hourCycle: 'h24',
+});
+
 @Component({
   selector: 'smt-calendar',
   standalone: true,
   imports: [DatePipe, NgClass, MenuComponent, DebounceMousemoveDirective],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.css',
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarComponent {
   // NOTE: detect when options changes
@@ -30,7 +35,7 @@ export class CalendarComponent {
   }
 
   today = new Date();
-  currentMonth = this.today;
+  currentMonth = new Date();
   daysOfTheWeek = getWeekDays(this._options.startOnMonday, 'en-US');
 
   readonly VIEW_OPTIONS: MenuItem<ViewMode>[] = [
@@ -43,13 +48,15 @@ export class CalendarComponent {
   viewMode = signal(this.VIEW_OPTIONS[0]);
 
   selectedDate: Date = new Date();
-  hours: string[] = Array.from({ length: 24 }, (_, i) => `${i}:00`); // Hours 00:00 to 23:00
+  hours: string[] = Array.from({ length: 24 }, (_, i) => `${i < 10 ? 0 : ''}${i}:00`); // Hours 00:00 to 23:00
   selectedRange: any = null;
   // selectedRange: { startHour: string; endHour?: string } = null;
   isDragging = false;
 
   isCurrentHour(hour: string): boolean {
-    return hour.includes(this.today.getHours().toString());
+    const currentHour = hoursFormatter.format(this.today);
+    console.log(hour);
+    return hour.includes(currentHour);
   }
 
   get minutesInPercent(): string {
