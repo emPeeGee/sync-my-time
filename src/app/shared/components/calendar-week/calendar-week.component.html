@@ -1,0 +1,28 @@
+<p>calendar-week works!</p>
+<div class="h-full w-full flex flex-row flex-nowrap">
+  <div>
+    @for (hour of hours; track $index) {
+      <div class="relative flex flex-col text-xs">
+        <div class="flex items-center h-8 w-14">
+          <div class="select-none text-gray-700 leading-4">
+            {{ hour }}
+          </div>
+        </div>
+        <!-- <div class="w-full relative">
+        <div class="w-full h-px bg-gray-300"></div> -->
+
+        <!-- @if (isCurrentHour(hour)) {
+          <div
+            class="w-full h-0.5 absolute bg-lime-600 before:block before:w-4 before:h-4 before:bg-lime-600 before:content-[''] before:rounded-full before:-translate-y-2 before:-translate-x-3.5"
+            [style]="{ top: minutesInPercent }"></div>
+        } -->
+        <!-- </div> -->
+      </div>
+    }
+  </div>
+  @for (item of [1, 2, 3, 4, 5, 6, 7]; track $index) {
+    <div class="week-day flex-1 border border-gray-300 border-l-0 group-last:border-8">
+      <smt-calendar-day></smt-calendar-day>
+    </div>
+  }
+</div>

@@ -4,6 +4,7 @@ import { MenuComponent } from '../menu/menu.component';
 import { MenuItem } from '../../../core/models/menu.model';
 import { DebounceMousemoveDirective } from '../../directives/debounce-mousemove.directive';
 import { CalendarDayComponent } from '../calendar-day/calendar-day.component';
+import { CalendarWeekComponent } from '../calendar-week/calendar-week.component';
 
 interface CalendarOptions {
   startOnMonday: boolean;
@@ -16,7 +17,14 @@ type ViewMode = 'day' | 'week' | 'month' | 'year';
 @Component({
   selector: 'smt-calendar',
   standalone: true,
-  imports: [DatePipe, NgClass, MenuComponent, DebounceMousemoveDirective, CalendarDayComponent],
+  imports: [
+    DatePipe,
+    NgClass,
+    MenuComponent,
+    DebounceMousemoveDirective,
+    CalendarDayComponent,
+    CalendarWeekComponent,
+  ],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.css',
   // changeDetection: ChangeDetectionStrategy.OnPush,
@@ -41,7 +49,7 @@ export class CalendarComponent {
     { id: 'month', label: 'Month view' },
     { id: 'year', label: 'Year view' },
   ];
-  viewMode = signal(this.VIEW_OPTIONS[0]);
+  viewMode = signal(this.VIEW_OPTIONS[1]);
 
   getDaysInCurrentMonth() {
     const year = this.currentMonth.getFullYear();
