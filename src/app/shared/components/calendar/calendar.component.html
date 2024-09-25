@@ -70,7 +70,9 @@
             (mousedown)="onMouseDown(hour)"
             (mouseup)="onMouseUp(hour)">
             <div class="flex items-center h-8 w-12">
-              <div class="select-none text-gray-700 leading-4">
+              <div
+                class="select-none text-gray-700 leading-4"
+                [ngClass]="{ 'font-bold': isCurrentHour(hour) }">
                 {{ hour }}
               </div>
             </div>
