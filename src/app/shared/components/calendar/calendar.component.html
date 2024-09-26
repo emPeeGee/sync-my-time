@@ -58,40 +58,9 @@
 
   <div class="shadow ring-1 ring-black ring-opacity-5 lg:flex lg:flex-auto lg:flex-col">
     @if (viewMode().id === 'day') {
-      <div
-        class="relative flex flex-col text-xs leading-6 text-gray-700 lg:flex-auto p-4 select-none"
-        smtDebounceMousemove
-        [debounceTime]="100"
-        debounceFilter="data-hour"
-        (debouncedMousemove)="onMouseMove($event)">
-        <!-- <div class="absolute -top-1 left-20 w-px h-[98%] bg-gray-300"></div> -->
-        @for (hour of hours; track hour) {
-          <div
-            class="relative flex flex-row data-hour"
-            [attr.data-hour]="hour"
-            (mousedown)="onMouseDown(hour)"
-            (mouseup)="onMouseUp(hour)">
-            <div class="flex items-center h-8 w-12">
-              <div
-                class="select-none text-gray-700 leading-4"
-                [ngClass]="{ 'font-bold': isCurrentHour(hour) }">
-                {{ hour }}
-              </div>
-            </div>
-            <div class="w-full relative" [ngClass]="{ 'bg-rose-200': isSelected(hour) }">
-              <div class="w-full h-px bg-gray-300"></div>
-
-              @if (isCurrentHour(hour)) {
-                <div
-                  class="w-full h-0.5 absolute bg-lime-600"
-                  [style]="{ top: minutesInPercent }"></div>
-              }
-            </div>
-          </div>
-        }
-
-        <div class="w-[calc(100%-3rem)] h-px ml-auto bg-gray-300"></div>
-      </div>
+      <smt-calendar-day></smt-calendar-day>
+    } @else if (viewMode().id === 'week') {
+      <smt-calendar-week></smt-calendar-week>
     } @else if (viewMode().id === 'month') {
       <div
         class="grid grid-cols-7 gap-px border-b border-gray-300 bg-gray-200 text-center text-xs font-semibold leading-6 text-gray-700 lg:flex-none">

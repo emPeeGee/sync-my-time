@@ -1,0 +1,38 @@
+<div
+  class="relative flex flex-col text-xs text-gray-700 lg:flex-auto p-4 select-none"
+  smtDebounceMousemove
+  [debounceTime]="150"
+  (debouncedMousemove)="onMouseMove($event)"
+  debounceFilter="data-hour">
+  <!-- <div class="absolute -top-1 left-20 w-px h-[98%] bg-gray-300"></div> -->
+  @for (hour of hours; track $index) {
+    <div
+      class="relative flex flex-row data-hour"
+      [attr.data-hour]="hour"
+      (mousedown)="onMouseDown(hour)"
+      (mouseup)="onMouseUp(hour)">
+      <!-- <div class="flex items-center h-8 w-14"
+       
+      >
+        <div 
+        
+                class="select-none text-gray-700 leading-4"
+                [ngClass]="{ 'font-bold': isCurrentHour(hour) }">
+        >
+          {{ hour }}
+        </div>
+      </div> -->
+      <div class="w-full h-8 relative" [ngClass]="{ 'bg-rose-200': isSelected(hour) }">
+        <div class="w-full h-px bg-gray-300"></div>
+
+        @if (isCurrentHour(hour)) {
+          <div
+            class="w-full h-0.5 absolute bg-lime-600 before:block before:w-4 before:h-4 before:bg-lime-600 before:content-[''] before:rounded-full before:-translate-y-2 before:-translate-x-3.5"
+            [style]="{ top: minutesInPercent }"></div>
+        }
+      </div>
+    </div>
+  }
+
+  <div class="w-[calc(100%-3rem)] h-px ml-auto bg-gray-300"></div>
+</div>

@@ -3,6 +3,8 @@ import { ChangeDetectionStrategy, Component, Input, signal } from '@angular/core
 import { MenuComponent } from '../menu/menu.component';
 import { MenuItem } from '../../../core/models/menu.model';
 import { DebounceMousemoveDirective } from '../../directives/debounce-mousemove.directive';
+import { CalendarDayComponent } from '../calendar-day/calendar-day.component';
+import { CalendarWeekComponent } from '../calendar-week/calendar-week.component';
 
 interface CalendarOptions {
   startOnMonday: boolean;
@@ -10,17 +12,19 @@ interface CalendarOptions {
 
 const TOTAL_CELLS = 42;
 
-type ViewMode = 'day' | 'work-day' | 'week' | 'month' | 'year';
-
-const hoursFormatter = new Intl.DateTimeFormat('en-US', {
-  hour: 'numeric',
-  hourCycle: 'h24',
-});
+type ViewMode = 'day' | 'week' | 'month' | 'year';
 
 @Component({
   selector: 'smt-calendar',
   standalone: true,
-  imports: [DatePipe, NgClass, MenuComponent, DebounceMousemoveDirective],
+  imports: [
+    DatePipe,
+    NgClass,
+    MenuComponent,
+    DebounceMousemoveDirective,
+    CalendarDayComponent,
+    CalendarWeekComponent,
+  ],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,70 +38,19 @@ export class CalendarComponent {
     this.daysOfTheWeek = getWeekDays(this._options.startOnMonday, 'en-US');
   }
 
+  // TODO: To calendar service and replace in other places
   today = new Date();
   currentMonth = new Date();
   daysOfTheWeek = getWeekDays(this._options.startOnMonday, 'en-US');
 
   readonly VIEW_OPTIONS: MenuItem<ViewMode>[] = [
     { id: 'day', label: 'Day view' },
-    { id: 'work-day', label: 'Work day view' },
     { id: 'week', label: 'Week view' },
     { id: 'month', label: 'Month view' },
     { id: 'year', label: 'Year view' },
   ];
-  viewMode = signal(this.VIEW_OPTIONS[0]);
 
-  selectedDate: Date = new Date();
-  hours: string[] = Array.from({ length: 24 }, (_, i) => `${i < 10 ? 0 : ''}${i}:00`); // Hours 00:00 to 23:00
-  selectedRange: any = null;
-  // selectedRange: { startHour: string; endHour?: string } = null;
-  isDragging = signal(false);
-
-  isCurrentHour(hour: string): boolean {
-    const currentHour = hoursFormatter.format(this.today);
-    return hour.includes(currentHour);
-  }
-
-  get minutesInPercent(): string {
-    return `${Math.floor((100 * this.today.getMinutes()) / 60)}%`;
-  }
-
-  onMouseDown(hour: string) {
-    this.isDragging.set(true);
-    this.selectedRange = { startHour: hour };
-  }
-
-  onMouseMove(hour: unknown) {
-    if (this.isDragging()) {
-      this.selectedRange = { ...this.selectedRange, endHour: hour };
-    }
-  }
-
-  onMouseUp(hour: string) {
-    this.isDragging.set(false);
-    this.selectedRange = { ...this.selectedRange, endHour: hour };
-  }
-
-  // NOTE: is called too many times
-  isSelected(hour: string): boolean {
-    if (!this.selectedRange) return false;
-
-    const { startHour, endHour } = this.selectedRange;
-    if (!endHour) return hour === startHour;
-
-    return this.isWithinRange(hour);
-  }
-
-  isWithinRange(hour: string): boolean {
-    const startIndex = this.hours.indexOf(this.selectedRange.startHour);
-    const endIndex = this.hours.indexOf(this.selectedRange.endHour);
-    const currentIndex = this.hours.indexOf(hour);
-
-    return (
-      (currentIndex >= startIndex && currentIndex <= endIndex) ||
-      (currentIndex <= startIndex && currentIndex >= endIndex)
-    );
-  }
+  viewMode = signal(this.VIEW_OPTIONS[1]);
 
   getDaysInCurrentMonth() {
     const year = this.currentMonth.getFullYear();
@@ -165,7 +118,6 @@ export class CalendarComponent {
           this.currentMonth.getDate() + (type === 'next' ? 1 : -1)
         );
         break;
-      case 'work-day':
       case 'week':
         break;
 

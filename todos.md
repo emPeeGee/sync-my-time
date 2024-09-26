@@ -17,3 +17,4 @@
 16. Google calendar, outlook, apple calendar as inspiration
 17. e2e tests or integration tests
 18. Primary color with tailwind
+19. Instead of work week view. Setting option -> Show weekends
