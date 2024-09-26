@@ -35,13 +35,13 @@ export class CalendarComponent {
   private _options: CalendarOptions = { startOnMonday: true };
   @Input() set options(value: CalendarOptions) {
     this._options = value;
-    this.daysOfTheWeek = getWeekDays(this._options.startOnMonday, 'en-US');
+    this.daysOfTheWeek = getWeekDays(this._options.startOnMonday);
   }
 
   // TODO: To calendar service and replace in other places
   today = new Date();
   currentMonth = new Date();
-  daysOfTheWeek = getWeekDays(this._options.startOnMonday, 'en-US');
+  daysOfTheWeek = getWeekDays(this._options.startOnMonday);
 
   readonly VIEW_OPTIONS: MenuItem<ViewMode>[] = [
     { id: 'day', label: 'Day view' },
@@ -141,8 +141,8 @@ function getDayName(day: Date, locale = 'en-US'): string {
   return day.toLocaleDateString(locale, { weekday: 'long' });
 }
 
-export function getWeekDays(startOnMonday = true, locale = 'en-US'): string[] {
-  const weekDays: string[] = [];
+export function getWeekDays(startOnMonday = true): Date[] {
+  const weekDays: Date[] = [];
   const baseDate = new Date();
 
   for (let i = 0; i < 7; i++) {
@@ -153,8 +153,7 @@ export function getWeekDays(startOnMonday = true, locale = 'en-US'): string[] {
       baseDate.setDate(baseDate.getDate() - baseDate.getDay() + dayOffset)
     );
 
-    const dayName = currentDay.toLocaleDateString(locale, { weekday: 'long' });
-    weekDays.push(dayName);
+    weekDays.push(currentDay);
   }
 
   return weekDays;

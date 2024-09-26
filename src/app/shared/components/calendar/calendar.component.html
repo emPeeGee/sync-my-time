@@ -58,7 +58,7 @@
 
   <div class="shadow ring-1 ring-black ring-opacity-5 lg:flex lg:flex-auto lg:flex-col">
     @if (viewMode().id === 'day') {
-      <smt-calendar-day></smt-calendar-day>
+      <smt-calendar-day [day]="today"></smt-calendar-day>
     } @else if (viewMode().id === 'week') {
       <smt-calendar-week></smt-calendar-week>
     } @else if (viewMode().id === 'month') {
@@ -66,8 +66,8 @@
         class="grid grid-cols-7 gap-px border-b border-gray-300 bg-gray-200 text-center text-xs font-semibold leading-6 text-gray-700 lg:flex-none">
         @for (day of daysOfTheWeek; track $index) {
           <div class="flex justify-center bg-white py-2">
-            <span>{{ day.charAt(0) }}</span>
-            <span class="sr-only sm:not-sr-only">{{ day.slice(1, 3) }}</span>
+            <span class="sm:sr-only">{{ day | date: 'E' }}</span>
+            <span class="sr-only sm:not-sr-only">{{ day | date: 'EEEE' }}</span>
           </div>
         }
       </div>
