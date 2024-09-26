@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { DebounceMousemoveDirective } from '../../directives/debounce-mousemove.directive';
-import { NgClass } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
 
 const hoursFormatter = new Intl.DateTimeFormat('en-US', {
   hour: 'numeric',
@@ -10,23 +10,23 @@ const hoursFormatter = new Intl.DateTimeFormat('en-US', {
 @Component({
   selector: 'smt-calendar-day',
   standalone: true,
-  imports: [DebounceMousemoveDirective, NgClass],
+  imports: [DebounceMousemoveDirective, NgClass, DatePipe],
   templateUrl: './calendar-day.component.html',
   styleUrl: './calendar-day.component.css',
 })
 export class CalendarDayComponent {
+  day = input.required<Date>();
   hours: string[] = Array.from({ length: 24 }, (_, i) => `${i}:00`); // Hours 00:00 to 23:00
   selectedRange: any = null;
   // selectedRange: { startHour: string; endHour?: string } = null;
   isDragging = false;
-  today = new Date();
 
   get minutesInPercent(): string {
-    return `${Math.floor((100 * this.today.getMinutes()) / 60)}%`;
+    return `${Math.floor((100 * this.day().getMinutes()) / 60)}%`;
   }
 
   isCurrentHour(hour: string): boolean {
-    const currentHour = hoursFormatter.format(this.today);
+    const currentHour = hoursFormatter.format(this.day());
     return hour.includes(currentHour);
   }
 
