@@ -1,13 +1,12 @@
 <div class="h-screen relative flex-1 flex flex-col">
   <div class="flex-1 flex flex-col overflow-hidden">
-    <header class="flex justify-between items-center bg-blue-300 p-4">
+    <header class="flex justify-between items-center p-4 border-4 border-gray-900 border-dashed">
       <div class="flex">Left</div>
       <div class="flex">Right</div>
     </header>
     <div class="flex h-full">
       <smt-sidebar />
       <main class="flex flex-col w-full bg-white overflow-x-hidden overflow-y-auto mb-14">
-        <smt-button text="Click" />
         <smt-user></smt-user>
         <smt-event></smt-event>
         <router-outlet />
